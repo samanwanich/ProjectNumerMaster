@@ -47,14 +47,14 @@ class App extends Component {
                   <Menu.Item key="menu_newton" className='sub'><Link to="/newton-raphson">Newton-Raphson</Link></Menu.Item>
                   <Menu.Item key="menu_secant" className='sub'><Link to="/secant">Secant Method</Link></Menu.Item>
                 </SubMenu>
-                {/*
+                
                 <SubMenu key="algebra_submenu" title={<span>Linear Algebra</span>}>
                   <Menu.Item key="menu_gauss" className='sub'><Link to="/gauss">Gauss's Elimination</Link></Menu.Item>
                   <Menu.Item key="menu_lu" className='sub'><Link to="/lu">LU Decomposition</Link></Menu.Item>
                   <Menu.Item key="menu_jacobi" className='sub'><Link to="/jacobi">Jacobi Iteration Method</Link></Menu.Item>
                   <Menu.Item key="menu_seidel" className='sub'><Link to="/seidel">Gauss Seidel Iteration</Link></Menu.Item>
                 </SubMenu>
-                */}
+                
               </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>

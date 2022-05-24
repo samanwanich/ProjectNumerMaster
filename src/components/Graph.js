@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { range, compile } from 'mathjs';
-import Plot from 'react-plotly.js';
+//import { Plot } from 'react-plotly.js';
 
 export default class Graph extends Component {
     render() {
+        const Plot = require('react-plotly.js').default;
         let { fx, title } = this.props;
         return (
             <Plot
