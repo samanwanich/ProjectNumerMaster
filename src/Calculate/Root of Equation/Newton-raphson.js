@@ -6,7 +6,7 @@ import { error, func, funcDiff } from '../../services/Services';
 import Graph from '../../components/Graph';
 
 const InputStyle = {
-    background: "#white",
+    background: "white",
     color: "black",
     fontWeight: "bold",
     fontSize: "24px"

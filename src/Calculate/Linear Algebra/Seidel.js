@@ -4,7 +4,7 @@ import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error } from '../../services/Services';
 const InputStyle = {
-    background: "#white",
+    background: "white",
     color: "black",
     fontWeight: "bold",
     fontSize: "24px"

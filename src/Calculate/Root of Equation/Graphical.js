@@ -7,7 +7,7 @@ import { func } from '../../services/Services';
 
 
 const InputStyle = {
-    background: "#white",
+    background: "white",
     color: "black",
     fontWeight: "bold",
     fontSize: "24px"

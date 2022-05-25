@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { error, func } from '../../services/Services';
+import { error, func, bisection_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
 const InputStyle = {
-    background: "#white",
+    background: "white",
     color: "black",
     fontWeight: "bold",
     fontSize: "24px"
+
 };
 var dataInTable = []
 const columns = [
@@ -47,6 +48,7 @@ class Bisection extends Component {
         this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.bisection = this.bisection.bind(this);
+        this.handleAPI = this.handleAPI.bind(this);
     }
 
     getInitialState = () => ({
@@ -110,6 +112,21 @@ class Bisection extends Component {
 
     }
 
+    async handleAPI() {
+    
+        const response = await bisection_API();
+        console.log(response);
+        this.setState({
+            fx: response.fx,
+            xl: response.xl,
+            xr: response.xr
+        })
+        const { fx, xl, xr } = this.state;
+
+        this.bisection(parseFloat(xl), parseFloat(xr));
+        
+    }
+
     createTable(xl, xr, x, error) {
         dataInTable = []
         for (var i = 0; i < xl.length; i++) {
@@ -127,6 +144,7 @@ class Bisection extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+
     }
     render() {
         let { fx, xl, xr } = this.state;
@@ -137,18 +155,23 @@ class Bisection extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f2f2f2", borderRadius:"15px", color: "#FFFFFFFF" }}
+                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
+                            id="inputCard"
                         >
-                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                            <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
-                            <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
+                            <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
                             <div className="row">
                                 <div className="col-3">
                                     <Button id="submit_button" onClick={
                                     () => this.bisection(parseFloat(xl), parseFloat(xr))
                                 }
                                     style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                                </div>
+                                <div className="col">
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
+                                    style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
                                 </div>
                             </div>
 
@@ -165,10 +188,10 @@ class Bisection extends Component {
                         <Card
                             title={"Output"}
                             bordered={true}
-                            style={{ width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
+                            style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
-                            <Table columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
+                            <Table pagination={{defaultPageSize: 5}} columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
                         </Card>
                     }
                 </div>
