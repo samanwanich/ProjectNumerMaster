@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { error, func } from '../../services/Services';
+import { error, func, secant_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
 const InputStyle = {
@@ -33,6 +33,7 @@ const columns = [
 class Secant extends Component {
     constructor() {
         super();
+        /*
         this.state = {
             fx: "",
             x0: 0,
@@ -40,9 +41,20 @@ class Secant extends Component {
             showOutputCard: false,
             showGraph: false
         }
+        */
+        this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.secant = this.secant.bind(this);
+        this.handleAPI = this.handleAPI.bind(this);
     }
+
+    getInitialState = () => ({
+        fx: "",
+        x0: 0,
+        x1: 0,
+        showOutputCard: false,
+        showGraph: false
+    })
 
     secant(x0, x1) {
         var x = [], y = 0, epsilon = parseFloat(0.000000);
@@ -86,6 +98,22 @@ class Secant extends Component {
         }
 
     }
+
+    async handleAPI() {
+
+        const response = await secant_API();
+        console.log(response);
+        this.setState({
+            fx: response.fx,
+            x0: response.xl,
+            x1: response.xr
+        })
+        const { fx, x0, x1 } = this.state;
+
+        this.secant(parseFloat(x0), parseFloat(x1));
+
+    }
+
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -101,16 +129,24 @@ class Secant extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f2f2f2", borderRadius:"15px", color: "#FFFFFFFF" }}
+                            style={{ background: "#f2f2f2", borderRadius: "15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                         >
                             <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
                             <h2>X<sub>1</sub></h2><Input size="large" name="x1" style={InputStyle}></Input><br /><br />
-                            <Button id="submit_button" onClick={
-                                () => this.secant(parseFloat(x0), parseFloat(x1))
-                            }
-                                style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                            <div className="row">
+                                <div className="col-3">
+                                    <Button id="submit_button" onClick={
+                                        () => this.secant(parseFloat(x0), parseFloat(x1))
+                                    }
+                                        style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                                </div>
+                                <div className="col">
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
+                                        style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
+                                </div>
+                            </div>
 
                         </Card>
                     </div>
@@ -126,6 +162,9 @@ class Secant extends Component {
                             style={{ width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
+                            <label style={{ color: "black" }}>f(x): {fx}</label><br />
+                            <label style={{ color: "black" }}>X<sub>0</sub>: {x0}</label><br />
+                            <label style={{ color: "black" }}>X<sub>1</sub>: {x1}</label><br />
                             <Table columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}
                             ></Table>
                         </Card>

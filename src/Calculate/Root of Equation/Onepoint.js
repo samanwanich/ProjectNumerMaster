@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Card, Input, Button, Table } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
-import { error, func } from '../../services/Services';
+import { error, func, onepoint_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
 const InputStyle = {
@@ -34,16 +34,26 @@ class Onepoint extends Component {
 
     constructor() {
         super();
+        /*
         this.state = {
             fx: "",
             x0: 0,
             showOutputCard: false,
             showGraph: false
         }
+        */
+        this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.onepoint = this.onepoint.bind(this);
     }
-    
+
+    getInitialState = () => ({
+        fx: "",
+        x0: 0,
+        showOutputCard: false,
+        showGraph: false
+    })
+
     onepoint(xold) {
         var xnew = 0;
         var epsilon = parseFloat(0.000000);
@@ -80,11 +90,27 @@ class Onepoint extends Component {
         }
 
     }
+
+    async handleAPI() {
+
+        const response = await onepoint_API();
+        console.log(response);
+        this.setState({
+            fx: response.fx,
+            xold: response.xl,
+        })
+        const { fx, xold } = this.state;
+
+        this.onepoint(parseFloat(xold));
+
+    }
+
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
+
     render() {
         let { fx, x0 } = this.state;
         return (
@@ -94,15 +120,23 @@ class Onepoint extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f2f2f2", borderRadius:"15px", color: "#FFFFFFFF" }}
+                            style={{ background: "#f2f2f2", borderRadius: "15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                         >
                             <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input><br /><br />
-                            <Button id="submit_button" onClick={
-                                () => this.onepoint(parseFloat(x0))
-                            }
-                                style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                            <div className="row">
+                                <div className="col-3">
+                                    <Button id="submit_button" onClick={
+                                        () => this.onepoint(parseFloat(x0))
+                                    }
+                                        style={{ background: "#4caf50", color: "white" }}>Submit</Button>
+                                </div>
+                                <div className="col">
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
+                                        style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
+                                </div>
+                            </div>
 
                         </Card>
                     </div>
@@ -118,6 +152,8 @@ class Onepoint extends Component {
                             style={{ width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
+                            <label style={{ color: "black" }}>f(x): {fx}</label><br />
+                            <label style={{ color: "black" }}>X<sub>0</sub>: {x0}</label><br />
                             <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}>
                             </Table>
                         </Card>

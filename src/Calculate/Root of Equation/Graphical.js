@@ -35,6 +35,7 @@ class Graphical extends Component {
 
     constructor() {
         super();
+        /*
         this.state = {
             fx: "",
             start: 0,
@@ -42,9 +43,19 @@ class Graphical extends Component {
             showOutputCard: false,
             showGraph: false
         }
+        */
+        this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.graphical = this.graphical.bind(this);
     }
+
+    getInitialState = () => ({
+        fx: "",
+        start: 0,
+        finish: 0,
+        showOutputCard: false,
+        showGraph: false
+    })
 
     graphical() {
         var data = []
@@ -117,6 +128,9 @@ class Graphical extends Component {
                             style={{ width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
+                            <label style={{color: "black"}}>f(x): {fx}</label><br/>
+                            <label style={{color: "black"}}>Start: {start}</label><br/>
+                            <label style={{color: "black"}}>Finish: {finish}</label><br/>
                             <Table columns={columns} bordered={true} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
                         </Card>
                     }                    

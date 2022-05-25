@@ -224,7 +224,7 @@ class Seidel extends Component {
                             <Card
                             title={"Output"}
                             bordered={true}
-                            style={{width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
+                            style={{width: "100%", background: "#f2f2f2", color: "black" }}
                             id="outputCard"
                             >
                                 <Table columns={columns} dataSource={dataInTable} bordered={true} bodyStyle={{fontWeight: "bold", fontSize: "18px", color: "black", overflowX: "scroll"}}

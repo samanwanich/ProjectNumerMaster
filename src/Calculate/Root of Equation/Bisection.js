@@ -57,8 +57,7 @@ class Bisection extends Component {
         xr: 0,
         showOutputCard: false,
         showGraph: false,
-        moveLeft: false
-        
+        moveLeft: false  
     })
 
     bisection(xl, xr) {
@@ -155,13 +154,13 @@ class Bisection extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
+                            style={{ background: "#f2f2f2", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                             id="inputCard"
                         >
-                            <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                            <h2 style={{color:"white"}}>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
-                            <h2 style={{color:"white"}}>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
+                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
+                            <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
                             <div className="row">
                                 <div className="col-3">
                                     <Button id="submit_button" onClick={
@@ -188,9 +187,13 @@ class Bisection extends Component {
                         <Card
                             title={"Output"}
                             bordered={true}
-                            style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
+                            style={{ width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
+                            
+                            <label style={{color: "black"}}>f(x): {fx}</label><br/>
+                            <label style={{color: "black"}}>X<sub>L</sub>: {xl}</label><br/>
+                            <label style={{color: "black"}}>X<sub>L</sub>: {xr}</label><br/>
                             <Table pagination={{defaultPageSize: 5}} columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
                         </Card>
                     }

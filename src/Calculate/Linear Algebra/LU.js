@@ -144,7 +144,7 @@ class LU extends Component {
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ background: "#f2f2f2", color: "#FFFFFFFF" }}
+                                style={{ background: "#f2f2f2", color: "black" }}
                                 onChange={this.handleChange} id="answerCard">
                                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>{output}</p>
                             </Card>
