@@ -47,7 +47,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *      - name: token
  *        in: formData
  *        required: true
- *        default: your access token
+ *        description: your access token key
  *    responses:
  *      '200':
  *        description: successful response
@@ -79,7 +79,7 @@ app.post('/bisection', (req, res) => {
  *      - name: token
  *        in: formData
  *        required: true
- *        default: your access token
+ *        description: your access token key
  *    responses:
  *      '200':
  *        description: successful response
@@ -111,7 +111,7 @@ app.post('/falsepos', (req, res) => {
  *      - name: token
  *        in: formData
  *        required: true
- *        default: your access token
+ *        description: your access token key
  *    responses:
  *      '200':
  *        description: successful response
@@ -142,7 +142,7 @@ app.post('/onepoint', (req, res) => {
  *      - name: token
  *        in: formData
  *        required: true
- *        default: your access token
+ *        description: your access token key
  *    responses:
  *      '200':
  *        description: successful response
@@ -173,7 +173,7 @@ app.post('/newton', (req, res) => {
  *      - name: token
  *        in: formData
  *        required: true
- *        default: your access token
+ *        description: your access token key
  *    responses:
  *      '200':
  *        description: successful response
