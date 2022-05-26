@@ -95,7 +95,6 @@ Add additional notes about how to deploy this on a live system.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
 - [Swagger](https://www.npmjs.com/package/swagger-jsdoc) - API docs
 - [React](https://reactjs.org/) - Web Framework
