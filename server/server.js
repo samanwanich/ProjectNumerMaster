@@ -118,7 +118,7 @@ app.post('/falsepos', (req, res) => {
  */
 
 let onepoint = ({
-  "fx": 'x*2-0.5',
+  "fx": '(x+1)/3',
   "xl": 0,
 })
 
@@ -149,8 +149,8 @@ app.post('/onepoint', (req, res) => {
  */
 
 let newton = ({
-  "fx": 'x^3+2',
-  "xl": 0,
+  "fx": 'x^2-7',
+  "xl": 2,
 })
 
 app.post('/newton', (req, res) => {
@@ -180,9 +180,9 @@ app.post('/newton', (req, res) => {
  */
 
 let secant = ({
-  "fx": 'x^3+2',
-  "xl": 0,
-  "xr": 1,
+  "fx": 'x^2-7',
+  "xl": 2,
+  "xr": 2.75,
 })
 
 app.post('/secant', (req, res) => {
