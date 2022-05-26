@@ -45,7 +45,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them.
 
 ```
-Give examples
+yarn install
 ```
 
 ### Installing
@@ -63,7 +63,7 @@ Explain how to run the automated tests for this system.
 Explain what these tests test and why
 
 ```
-Give an example
+npm test
 ```
 
 ### And coding style tests
@@ -71,7 +71,18 @@ Give an example
 Explain what these tests test and why
 
 ```
-Give an example
+npm test
+```
+
+### Running Project
+
+```
+yarn start
+```
+And go to server directory to run backend server
+
+```
+nodemon server.js
 ```
 
 ## 🎈 Usage <a name="usage"></a>
@@ -84,16 +95,14 @@ Add additional notes about how to deploy this on a live system.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
+- [Swagger](https://www.npmjs.com/package/swagger-jsdoc) - API docs
+- [React](https://reactjs.org/) - Web Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+- [@samanwanich](https://github.com/samanwanich)
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
