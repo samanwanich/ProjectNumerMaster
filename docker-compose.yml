@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: ./server/Dockerfile
+    image: "backend"
+    ports:
+      - "5004:5004"
+  frontend:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: "frontend"
+    ports:
+      - "3002:3000"
+    links:
+      - "backend"
