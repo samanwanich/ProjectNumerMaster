@@ -4,17 +4,14 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-
 const config = require("config");
 const api_token = config.get("api_token");
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 9000;
-app.use(express.json({
-  extended: false
-}))
 app.use(cors());
+app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT} 🚀`));
@@ -39,6 +36,23 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 ///////////////////////////////////////////////////////
 /**
  * @swagger
+ * /token:
+ *  get:
+ *    description: get api token.
+ *    responses:
+ *      '200':
+ *        description: successful response
+ */
+
+app.get('/token', (req, res) => {
+  console.log(api_token);
+  return res.json(api_token);
+});
+
+
+///////////////////////////////////////////////////////
+/**
+ * @swagger
  * /bisection:
  *  post:
  *    consumes: 
@@ -53,11 +67,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *        description: successful response
  */
 
-let bisection = ({
+let bisection = ([{
   "fx": 'x^4-13',
   "xl": 1.5,
   "xr": 2,
-})
+},
+{
+  "fx": 'x^4-7',
+  "xl": 1.75,
+  "xr": 2.5,
+}])
 
 app.post('/bisection', (req, res) => {
   const token = req.body.token;
@@ -85,11 +104,16 @@ app.post('/bisection', (req, res) => {
  *        description: successful response
  */
 
-let falsepos = ({
+let falsepos = ([{
   "fx": 'x*43-1',
   "xl": 0.02,
   "xr": 0.03,
-})
+},
+{
+  "fx": 'x*24-3',
+  "xl": 0.03,
+  "xr": 0.05,
+}])
 
 app.post('/falsepos', (req, res) => {
   const token = req.body.token;
@@ -117,10 +141,14 @@ app.post('/falsepos', (req, res) => {
  *        description: successful response
  */
 
-let onepoint = ({
+let onepoint = ([{
   "fx": '(x+1)/3',
   "xl": 0,
-})
+},
+{
+  "fx": '(x+2)/5',
+  "xl": 1,
+}])
 
 app.post('/onepoint', (req, res) => {
   const token = req.body.token;
@@ -148,10 +176,14 @@ app.post('/onepoint', (req, res) => {
  *        description: successful response
  */
 
-let newton = ({
+let newton = ([{
   "fx": 'x^2-7',
   "xl": 2,
-})
+},
+{
+  "fx": 'x^2-4',
+  "xl": 1.75,
+}])
 
 app.post('/newton', (req, res) => {
   const token = req.body.token;
@@ -179,11 +211,15 @@ app.post('/newton', (req, res) => {
  *        description: successful response
  */
 
-let secant = ({
+let secant = ([{
   "fx": 'x^2-7',
   "xl": 2,
   "xr": 2.75,
-})
+},
+{
+  "fx": 'x^2-4',
+  "xl": 1.75,
+}])
 
 app.post('/secant', (req, res) => {
   const token = req.body.token;
