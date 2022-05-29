@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Input, Button, Table } from 'antd';
+import { Card, Input, Button, Table, Select } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func, bisection_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
+const { Option } = Select;
 const InputStyle = {
     background: "white",
     color: "black",
@@ -55,9 +56,10 @@ class Bisection extends Component {
         fx: "",
         xl: 0,
         xr: 0,
+        i: 0,
         showOutputCard: false,
         showGraph: false,
-        moveLeft: false  
+        moveLeft: false
     })
 
     bisection(xl, xr) {
@@ -111,19 +113,21 @@ class Bisection extends Component {
 
     }
 
-    async handleAPI() {
-    
+    async handleAPI(i) {
+
         const response = await bisection_API();
         console.log(response);
+        console.log(i);
         this.setState({
-            fx: response.fx,
-            xl: response.xl,
-            xr: response.xr
+            fx: response[i].fx,
+            xl: response[i].xl,
+            xr: response[i].xr
         })
+        // eslint-disable-next-line no-unused-vars
         const { fx, xl, xr } = this.state;
 
         this.bisection(parseFloat(xl), parseFloat(xr));
-        
+
     }
 
     createTable(xl, xr, x, error) {
@@ -145,8 +149,15 @@ class Bisection extends Component {
         });
 
     }
+
+    onSelectChanged(value) {
+        this.setState({
+            i: value
+        });
+    }
+
     render() {
-        let { fx, xl, xr } = this.state;
+        let { fx, xl, xr, i } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Bisection</h2>
@@ -154,7 +165,7 @@ class Bisection extends Component {
                     <div className="col">
                         <Card
                             bordered={true}
-                            style={{ background: "#f2f2f2", borderRadius:"15px", color: "#FFFFFFFF" }}
+                            style={{ background: "#f2f2f2", borderRadius: "15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                             id="inputCard"
                         >
@@ -162,15 +173,19 @@ class Bisection extends Component {
                             <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
                             <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
                             <div className="row">
+                                <div className="col">
+                                    <Select defaultValue="0" style={InputStyle} onChange={this.onSelectChanged.bind(this)}>
+                                        <Option value="0">Example 1</Option>
+                                        <Option value="1">Example 2</Option>
+                                    </Select>
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI(parseFloat(i))}
+                                        style={{ background: "blue", color: "white" }}>Select Example</Button>
+                                </div>
                                 <div className="col-3">
                                     <Button id="submit_button" onClick={
-                                    () => this.bisection(parseFloat(xl), parseFloat(xr))
-                                }
-                                    style={{ background: "#4caf50", color: "white" }}>Submit</Button>
-                                </div>
-                                <div className="col">
-                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
-                                    style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
+                                        () => this.bisection(parseFloat(xl), parseFloat(xr))
+                                    }
+                                        style={{ background: "#4caf50", color: "white" }}>Submit</Button>
                                 </div>
                             </div>
 
@@ -190,11 +205,11 @@ class Bisection extends Component {
                             style={{ width: "100%", background: "#f2f2f2", color: "#FFFFFFFF" }}
                             id="outputCard"
                         >
-                            
-                            <label style={{color: "black"}}>f(x): {fx}</label><br/>
-                            <label style={{color: "black"}}>X<sub>L</sub>: {xl}</label><br/>
-                            <label style={{color: "black"}}>X<sub>L</sub>: {xr}</label><br/>
-                            <Table pagination={{defaultPageSize: 5}} columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
+
+                            <label style={{ color: "black" }}>f(x): {fx}</label><br />
+                            <label style={{ color: "black" }}>X<sub>L</sub>: {xl}</label><br />
+                            <label style={{ color: "black" }}>X<sub>L</sub>: {xr}</label><br />
+                            <Table pagination={{ defaultPageSize: 5 }} columns={columns} dataSource={dataInTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
                         </Card>
                     }
                 </div>

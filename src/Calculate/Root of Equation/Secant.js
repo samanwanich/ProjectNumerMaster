@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Input, Button, Table } from 'antd';
+import { Card, Input, Button, Table, Select } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func, secant_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
+const { Option } = Select;
 const InputStyle = {
     background: "white",
     color: "black",
@@ -33,15 +34,6 @@ const columns = [
 class Secant extends Component {
     constructor() {
         super();
-        /*
-        this.state = {
-            fx: "",
-            x0: 0,
-            x1: 0,
-            showOutputCard: false,
-            showGraph: false
-        }
-        */
         this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.secant = this.secant.bind(this);
@@ -52,6 +44,7 @@ class Secant extends Component {
         fx: "",
         x0: 0,
         x1: 0,
+        i: 0,
         showOutputCard: false,
         showGraph: false
     })
@@ -99,15 +92,16 @@ class Secant extends Component {
 
     }
 
-    async handleAPI() {
+    async handleAPI(i) {
 
         const response = await secant_API();
         console.log(response);
         this.setState({
-            fx: response.fx,
-            x0: response.xl,
-            x1: response.xr
+            fx: response[i].fx,
+            x0: response[i].xl,
+            x1: response[i].xr
         })
+        // eslint-disable-next-line no-unused-vars
         const { fx, x0, x1 } = this.state;
 
         this.secant(parseFloat(x0), parseFloat(x1));
@@ -120,8 +114,14 @@ class Secant extends Component {
         });
     }
 
+    onSelectChanged(value) {
+        this.setState({
+            i: value
+        });
+    }
+
     render() {
-        let { fx, x0, x1 } = this.state;
+        let { fx, x0, x1, i } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Secant Method</h2>
@@ -136,15 +136,19 @@ class Secant extends Component {
                             <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
                             <h2>X<sub>1</sub></h2><Input size="large" name="x1" style={InputStyle}></Input><br /><br />
                             <div className="row">
+                                <div className="col">
+                                    <Select defaultValue="0" style={InputStyle} onChange={this.onSelectChanged.bind(this)}>
+                                        <Option value="0">Example 1</Option>
+                                        <Option value="1">Example 2</Option>
+                                    </Select>
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI(parseFloat(i))}
+                                        style={{ background: "blue", color: "white" }}>Select Example</Button>
+                                </div>
                                 <div className="col-3">
                                     <Button id="submit_button" onClick={
                                         () => this.secant(parseFloat(x0), parseFloat(x1))
                                     }
                                         style={{ background: "#4caf50", color: "white" }}>Submit</Button>
-                                </div>
-                                <div className="col">
-                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
-                                        style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
                                 </div>
                             </div>
 

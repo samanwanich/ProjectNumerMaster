@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Input, Button, Table } from 'antd';
+import { Card, Input, Button, Table, Select } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
 import { error, func, funcDiff, newton_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
+const { Option } = Select;  
 const InputStyle = {
     background: "white",
     color: "black",
@@ -34,14 +35,6 @@ class Newton extends Component {
 
     constructor() {
         super();
-        /*
-        this.state = {
-            fx: "",
-            x0: 0,
-            showOutputCard: false,
-            showGraph: false
-        }
-        */
         this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.newton_raphson = this.newton_raphson.bind(this);
@@ -51,6 +44,7 @@ class Newton extends Component {
     getInitialState = () => ({
         fx: "",
         x0: 0,
+        i: 0,
         showOutputCard: false,
         showGraph: false
     })
@@ -91,14 +85,15 @@ class Newton extends Component {
 
     }
 
-    async handleAPI() {
+    async handleAPI(i) {
 
         const response = await newton_API();
         console.log(response);
         this.setState({
-            fx: response.fx,
-            xold: response.xl,
+            fx: response[i].fx,
+            xold: response[i].xl,
         })
+        // eslint-disable-next-line no-unused-vars
         const { fx, xold } = this.state;
 
         this.newton_raphson(parseFloat(xold));
@@ -111,8 +106,14 @@ class Newton extends Component {
         });
     }
 
+    onSelectChanged(value) {
+        this.setState({
+            i: value
+        });
+    }
+
     render() {
-        let { fx, x0 } = this.state;
+        let { fx, x0, i } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>Newton Raphson</h2>
@@ -126,15 +127,19 @@ class Newton extends Component {
                             <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input><br /><br />
                             <div className="row">
+                                <div className="col">
+                                    <Select defaultValue="0" style={InputStyle} onChange={this.onSelectChanged.bind(this)}>
+                                        <Option value="0">Example 1</Option>
+                                        <Option value="1">Example 2</Option>
+                                    </Select>
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI(parseFloat(i))}
+                                        style={{ background: "blue", color: "white" }}>Select Example</Button>
+                                </div>
                                 <div className="col-3">
                                     <Button id="submit_button" onClick={
                                     () => this.newton_raphson(parseFloat(x0))
                                 }
                                     style={{ background: "#4caf50", color: "white" }}>Submit</Button>
-                                </div>
-                                <div className="col">
-                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
-                                    style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
                                 </div>
                             </div>
 

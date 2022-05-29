@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Card, Input, Button, Table } from 'antd';
+import { Card, Input, Button, Table, Select } from 'antd';
 import '../../screen.css';
 import 'antd/dist/antd.css';
 
 import { error, func, falsepos_API } from '../../services/Services';
 import Graph from '../../components/Graph';
 
+const { Option } = Select;
 const InputStyle = {
     background: "white",
     color: "black",
@@ -45,15 +46,6 @@ class FalsePosition extends Component {
 
     constructor() {
         super();
-        /*
-        this.state = {
-            fx: "",
-            xl: 0,
-            xr: 0,
-            showOutputCard: false,
-            showGraph: false
-        }
-        */
         this.state = this.getInitialState();
         this.handleChange = this.handleChange.bind(this);
         this.false_position = this.false_position.bind(this);
@@ -64,6 +56,7 @@ class FalsePosition extends Component {
         fx: "",
         xl: 0,
         xr: 0,
+        i: 0,
         showOutputCard: false,
         showGraph: false
     })
@@ -134,15 +127,17 @@ class FalsePosition extends Component {
 
     }
 
-    async handleAPI() {
+    async handleAPI(i) {
 
         const response = await falsepos_API();
         console.log(response);
+        console.log(i);
         this.setState({
-            fx: response.fx,
-            xl: response.xl,
-            xr: response.xr
+            fx: response[i].fx,
+            xl: response[i].xl,
+            xr: response[i].xr
         })
+        // eslint-disable-next-line no-unused-vars
         const { fx, xl, xr } = this.state;
 
         this.false_position(parseFloat(xl), parseFloat(xr));
@@ -154,8 +149,15 @@ class FalsePosition extends Component {
             [event.target.name]: event.target.value
         });
     }
+
+    onSelectChanged(value) {
+        this.setState({
+            i: value
+        });
+    }
+
     render() {
-        let { fx, xl, xr } = this.state;
+        let { fx, xl, xr, i } = this.state;
         return (
             <div style={{ background: "#FFFF", padding: "30px" }}>
                 <h2 style={{ color: "black", fontWeight: "bold" }}>False Position</h2>
@@ -165,20 +167,25 @@ class FalsePosition extends Component {
                             bordered={true}
                             style={{ background: "#f2f2f2", borderRadius: "15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
+                            id="inputCard"
                         >
                             <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
                             <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
                             <div className="row">
+                                <div className="col">
+                                    <Select defaultValue="0" style={InputStyle} onChange={this.onSelectChanged.bind(this)}>
+                                        <Option value="0">Example 1</Option>
+                                        <Option value="1">Example 2</Option>
+                                    </Select>
+                                    <Button id="submit_button_api" onClick={() => this.handleAPI(parseFloat(i))}
+                                        style={{ background: "blue", color: "white" }}>Select Example</Button>
+                                </div>
                                 <div className="col-3">
                                     <Button id="submit_button" onClick={
                                         () => this.false_position(parseFloat(xl), parseFloat(xr))
                                     }
                                         style={{ background: "#4caf50", color: "white" }}>Submit</Button>
-                                </div>
-                                <div className="col">
-                                    <Button id="submit_button_api" onClick={() => this.handleAPI()}
-                                        style={{ background: "blue", color: "white" }}>Calculate from data that get from API</Button>
                                 </div>
                             </div>
 
