@@ -44,7 +44,6 @@ const bisection_API = async () => {
         }).then(res => {
             return res.json();
         })
-    console.log(response);
     return response;
 
 }
@@ -62,7 +61,6 @@ const falsepos_API = async () => {
         }).then(res => {
             return res.json();
         })
-    console.log(response);
     return response;
 
 }
@@ -80,7 +78,6 @@ const onepoint_API = async () => {
         }).then(res => {
             return res.json();
         })
-    console.log(response);
     return response;
 
 }
@@ -98,7 +95,6 @@ const newton_API = async () => {
         }).then(res => {
             return res.json();
         })
-    console.log(response);
     return response;
 
 }
@@ -116,7 +112,6 @@ const secant_API = async () => {
         }).then(res => {
             return res.json();
         })
-    console.log(response);
     return response;
 
 }
