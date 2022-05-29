@@ -80,7 +80,7 @@ let bisection = ([{
 
 app.post('/bisection', (req, res) => {
   const token = req.body.token;
-  if (token == api_token) {
+  if (token === api_token) {
     console.log(bisection);
     return res.json(bisection);
   }
@@ -110,14 +110,14 @@ let falsepos = ([{
   "xr": 0.03,
 },
 {
-  "fx": 'x*24-3',
-  "xl": 0.03,
-  "xr": 0.05,
+  "fx": 'x^2-3',
+  "xl": 1,
+  "xr": 2,
 }])
 
 app.post('/falsepos', (req, res) => {
   const token = req.body.token;
-  if (token == api_token) {
+  if (token === api_token) {
     console.log(falsepos);
     return res.json(falsepos);
   }
@@ -146,13 +146,13 @@ let onepoint = ([{
   "xl": 0,
 },
 {
-  "fx": '(x+2)/5',
+  "fx": '((x^2)-5)/4',
   "xl": 1,
 }])
 
 app.post('/onepoint', (req, res) => {
   const token = req.body.token;
-  if (token == api_token) {
+  if (token === api_token) {
     console.log(onepoint);
     return res.json(onepoint);
   }
@@ -187,7 +187,7 @@ let newton = ([{
 
 app.post('/newton', (req, res) => {
   const token = req.body.token;
-  if (token == api_token) {
+  if (token === api_token) {
     console.log(newton);
     return res.json(newton);
   }
@@ -223,7 +223,7 @@ let secant = ([{
 
 app.post('/secant', (req, res) => {
   const token = req.body.token;
-  if (token == api_token) {
+  if (token === api_token) {
     console.log(secant);
     return res.json(secant);
   }
