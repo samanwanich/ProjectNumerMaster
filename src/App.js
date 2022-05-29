@@ -77,11 +77,7 @@ class App extends Component {
             </Layout>
           </Layout>
           <Footer style={{ backgroundColor: "#1a8cff", minHeight: 40 }}>
-            <p style={{ fontSize: "24px", fontWeight: "bold", color: "white" }}>
-              <p style={{fontSize:"22px", verticalAlign:"text-bottom"}}><BookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="https://www.kmutnb.ac.th/" style={{ color: "white", textDecoration: "none" }}> Department of Computer and Information Science - King Mongkut's University of Technology North Bangkok</a></p>
-            </p>
-
-
+              <p style={{fontSize:"22px", verticalAlign:"text-bottom", fontWeight: "bold", color: "white"}}><BookFilled style={{ fontSize: "30px" }} /><a target="_blank" rel="noopener noreferrer" href="https://www.kmutnb.ac.th/" style={{ color: "white", textDecoration: "none" }}> Department of Computer and Information Science - King Mongkut's University of Technology North Bangkok</a></p>
           </Footer>
         </Layout>
       </Router>

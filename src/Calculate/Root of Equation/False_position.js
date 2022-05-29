@@ -169,9 +169,9 @@ class FalsePosition extends Component {
                             onChange={this.handleChange}
                             id="inputCard"
                         >
-                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                            <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
-                            <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
+                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle} placeholder="f(x)"></Input>
+                            <h2>X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle} placeholder="XL"></Input>
+                            <h2>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle} placeholder="XR"></Input><br /><br />
                             <div className="row">
                                 <div className="col">
                                     <Select defaultValue="0" style={InputStyle} onChange={this.onSelectChanged.bind(this)}>
